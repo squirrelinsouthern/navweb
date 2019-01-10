@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>nav-demo</title>
+</head>
+
+<body>
+    <P class='title'>/// Tastemaker </P>
+    
+  
+    <div class="wrapper">
+            
+            <main id="mainpart"></main>
+    </div>
+    <p class='foot'>WELCOME!@squirrel000 hahahahaha</p>
+    
+    
+    <script>
+
+        keys = {
+				'0': {0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p','length':10},
+				'1': {0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:'l','length':9},
+				'2': {0:'z',1:'x',2:'c',3:'v',4:'b',5:'n',6:'m','length':7},
+				'length': 3
+            }            
+        hash = {'q': 'qq.com', 'w': 'weibo.com', 'e': 'ele.me', 'r': 'xfyun.cn', 't': 'tianya.com', 'y': 'youtube.com', 
+                    'u': 'uc.com' , 'i': 'iqiyi.com', 'o': 'opera.com', 'p': undefined, 'a': 'acfun.tv', 's': 'sohu.com', 
+                    'z': 'zhihu.com', 'x': 'www.xiachufang.com','m': 'www.mcdonalds.com.cn','j': 'js.jirengu.com'}
+
+        //取出localStorage中的zzz对应的hash
+        hashInLocalStorage = JSON.parse(localStorage.getItem('zzz')||'null')
+        if(hashInLocalStorage){
+            hash = hashInLocalStorage
+        }
+
+        for(var i=0;i<keys['length'];i++){
+            Div = document.createElement('div')
+            mainpart.appendChild(Div)
+            row=keys[i]
+            console.log(row)
+            
+                for(var j=0;j<row.length;j++){  // 0-9 0-8 0-7
+                    Kbd = document.createElement('kbd')
+                    Div.appendChild(Kbd)
+                    Kbd.textContent = row[j]
+                    Button = document.createElement('button')
+                    Button.textContent = '编辑'
+                    Button.id = row[j]
+                    Button.onclick = function(ss){
+                        num = ss['target']['id']
+                        x = prompt("请输入网址")
+                        hash[num] = x
+                        // console.log(hash)
+                        localStorage.setItem('zzz',JSON.stringify(hash))
+                    }
+                    //Button为最后一 j=26;
+                    Kbd.appendChild(Button)
+                    Img = document.createElement('img')
+                    if(hash[row[j]]){
+                        Img.src = 'http://'+hash[row[j]]+'/favicon.ico'
+                    }else{
+                        Img.src = 'http://www.xiachufang.com/favicon.ico'
+                    }
+                    Img.onerror = function(xxx){
+                        xxx.target.src = 'http://www.xiachufang.com/favicon.ico'
+                    }
+                    Kbd.appendChild(Img)
+                }
+        }
+
+        document.onkeypress = function(ss){
+            // console.log(ss);    
+            zimu = ss['key'] // q w e r
+            website = hash[zimu]
+            // location.href = 'http://' + website
+            window.open('http://' + website,'_blank')
+        }
+
+
+    </script>
+</body>
+</html>
